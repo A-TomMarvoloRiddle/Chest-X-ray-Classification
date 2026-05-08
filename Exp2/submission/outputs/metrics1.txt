@@ -1,0 +1,10 @@
+
+PHASE 1
+Accuracy: 0.9688
+Precision: 0.9747
+Recall: 0.9625
+F1: 0.9686
+ROC-AUC: 0.9688
+Confusion Matrix:
+[[78  2]
+ [ 3 77]]
