@@ -2,7 +2,7 @@ import os
 import csv
 
 # ===== CONFIG =====
-TEST_DIR = "../dataset/test"
+TEST_DIR = "dataset/test"
 PRED_FILE = "predictions.csv"
 
 VALID_LABELS = {"normal", "pneumonia"}
@@ -27,13 +27,27 @@ def load_predictions(pred_file):
     with open(pred_file, "r") as f:
         reader = csv.DictReader(f)
 
-        if "image_name" not in reader.fieldnames or "label" not in reader.fieldnames:
-            raise ValueError("CSV must contain 'image_name' and 'label' columns")
+        legacy_columns = {"image_name", "label"}
+        detailed_columns = {"Filename", "True_Label", "Predicted_Label"}
 
-        for row in reader:
-            img = row["image_name"].strip()
-            label = row["label"].strip().lower()
-            preds[img] = label
+        if legacy_columns.issubset(reader.fieldnames):
+            for row in reader:
+                img = row["image_name"].strip()
+                label = row["label"].strip().lower()
+                preds[img] = label
+            return preds
+
+        if detailed_columns.issubset(reader.fieldnames):
+            for row in reader:
+                img = row["Filename"].strip()
+                label = row["Predicted_Label"].strip().lower()
+                preds[img] = label
+            return preds
+
+        raise ValueError(
+            "CSV must contain either 'image_name,label' or "
+            "'Filename,True_Label,Predicted_Label' columns"
+        )
 
     return preds
 
