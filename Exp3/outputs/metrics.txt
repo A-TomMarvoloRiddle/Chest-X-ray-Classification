@@ -1,0 +1,72 @@
+=== DenseNet121 (pretrained on ImageNet) ===
+
+--- Phase 1 | Validation ---
+Accuracy  : 0.8854
+Precision : 0.8855
+Recall    : 0.8854
+F1-Score  : 0.8854
+Confusion Matrix (rows=true, cols=pred):
+Classes   : ['normal', 'pneumonia']
+[[41  6]
+ [ 5 44]]
+
+--- Phase 2 | Validation ---
+Accuracy  : 0.8854
+Precision : 0.8871
+Recall    : 0.8854
+F1-Score  : 0.8854
+Confusion Matrix (rows=true, cols=pred):
+Classes   : ['normal', 'pneumonia']
+[[43  4]
+ [ 7 42]]
+
+--- Phase 3 | Validation ---
+Accuracy  : 0.8958
+Precision : 0.8966
+Recall    : 0.8958
+F1-Score  : 0.8958
+Confusion Matrix (rows=true, cols=pred):
+Classes   : ['normal', 'pneumonia']
+[[43  4]
+ [ 6 43]]
+
+
+=== TEST SET EVALUATION ===
+
+--- Phase 1 | Test Set ---
+Accuracy  : 0.9125
+Precision : 0.9135
+Recall    : 0.9125
+F1-Score  : 0.9124
+Confusion Matrix (rows=true, cols=pred):
+Classes   : ['normal', 'pneumonia']
+[[71  9]
+ [ 5 75]]
+
+--- Phase 2 | Test Set ---
+Accuracy  : 0.9125
+Precision : 0.9167
+Recall    : 0.9125
+F1-Score  : 0.9123
+Confusion Matrix (rows=true, cols=pred):
+Classes   : ['normal', 'pneumonia']
+[[77  3]
+ [11 69]]
+
+--- Phase 3 | Test Set ---
+Accuracy  : 0.9437
+Precision : 0.9444
+Recall    : 0.9437
+F1-Score  : 0.9437
+Confusion Matrix (rows=true, cols=pred):
+Classes   : ['normal', 'pneumonia']
+[[77  3]
+ [ 6 74]]
+
+
+=== Cross-Phase Summary (Test Set) ===
+       Accuracy  Precision  Recall      F1
+Phase                                     
+1        0.9125     0.9135  0.9125  0.9124
+2        0.9125     0.9167  0.9125  0.9123
+3        0.9438     0.9444  0.9438  0.9437
