@@ -1,187 +1,152 @@
-# ML Assignment — Chest X-ray Classification
+# Chest X-ray Classification Project
+
+## Overview
+
+This project implements a machine learning pipeline for classifying chest X-ray images into two categories: **Normal** and **Pneumonia**. The solution includes model training, evaluation, and interpretability analysis using Grad-CAM to highlight regions influencing predictions.
+
+The project was developed to explore various DL architectures from scratch CNNs to pretrained models like ResNet-18 and DenseNet-121.
 
 ## Objective
 
-Build a machine learning pipeline to classify chest X-ray images into:
-
-- Normal
-- Pneumonia
-
-Additionally, analyze which regions of the image influence your model’s predictions.
-
----
+- Classify chest X-ray images into Normal vs Pneumonia
+- Analyze model predictions using Grad-CAM for interpretability
+- Ensure the solution runs on CPU within time constraints
+- Document experiments and iterative improvements
 
 ## Dataset
 
-- Download: dataset.zip(https://drive.google.com/file/d/1Lx47Vuqf2OXzGeDGAZMfno0TY8RQJB0M/view?usp=sharing)
-- After download, extract: unzip dataset.zip 
-
-Structure:
+The dataset consists of chest X-ray images organized as follows:
 
 ```
-dataset/   
-├── train/    
-│   ├── normal/    
-│   └── pneumonia/  
-└── test/    
-    ├── normal/    
-    └── pneumonia/
+dataset/
+├── train/
+│   ├── normal/      # Normal X-ray images
+│   └── pneumonia/   # Pneumonia X-ray images
+└── test/
+    ├── normal/      # Test normal images
+    └── pneumonia/   # Test pneumonia images
 ```
 
----
+- **Download**: [dataset.zip](https://drive.google.com/file/d/1Lx47Vuqf2OXzGeDGAZMfno0TY8RQJB0M/view?usp=sharing)
+- **Input Size**: Models use 224×224 grayscale images
+- **Preprocessing**: Resize, normalization, and data augmentation
 
-## Tasks
+## Experiments
 
-### 1. Data Handling
+The project includes three main experiments with iterative improvements:
 
-- Load and process images
-- You may choose how to handle varying image sizes
+### Experiment 1: Baseline CNN from Scratch
+- **Framework**: PyTorch on CPU
+- **Architecture**: 4-block CNN (32→64→128→256 channels) with BatchNorm, Dropout
+- **Augmentation**: Random horizontal flips, rotations (±10°), color jitter
+- **Challenges**: Overfitting, Grad-CAM issues (fixed by proper hook registration)
+- **Best Result**: Improved generalization but lower accuracy compared to transfer learning
 
----
+### Experiment 2: ResNet-18 Pretrained
+- **Framework**: PyTorch with torchvision
+- **Architecture**: ResNet-18 pretrained on ImageNet, fine-tuned
+- **Phases**:
+  1. No augmentation, no regularization
+  2. With augmentation (flips, rotations, color jitter)
+  3. Augmentation + Dropout + Weight Decay + Label Smoothing
+- **Grad-CAM**: Hooked on `layer4` for feature visualization
 
-### 2. Model Training
+### Experiment 3: DenseNet-121 Pretrained
+- **Framework**: PyTorch with torchvision
+- **Architecture**: DenseNet-121 pretrained on ImageNet
+- **Phases**:
+  1. Frozen backbone, head-only training
+  2. Unfrozen backbone + augmentation
+  3. Full regularization (Dropout 0.3, WD 1e-4, LR 1e-4, Label Smoothing 0.1)
 
-- Train any classification model
-- Any framework allowed
+## Best Model
 
----
+**Experiment 2, Phase 3 (ResNet-18 with regularization)** achieves the highest performance:
 
-### 3. Evaluation
+- **Accuracy**: 0.9750
+- **Precision**: 0.9750
+- **Recall**: 0.9750
+- **F1-Score**: 0.9750
+- **ROC-AUC**: 0.9750
+- **Misclassifications**: 4 out of 160 test samples
 
-- Evaluate on test set
-- Report accuracy
+This model balances performance with interpretability and computational efficiency.
 
----
-
-### 4. Model Interpretation (Important)
-
-- Show which regions influenced predictions
-- Examples:
-  - Grad-CAM
-  - Heatmaps
-
----
-
-## Constraints
-
-- Your solution must run on CPU
-- Training + inference must complete within 60 minutes
-- Keep your solution simple and explainable
-
----
-
-## Deliverables
-
-Submit a .zip:
-
-```
-submission/   
-├── README.md  
-├── requirements.txt  
-├── train.py OR notebook.ipynb 
-├── experiments/
-   └──  experiments.md
-├── outputs/    
-   ├── metrics.txt    
-   ├── predictions.csv    
-   └── sample_outputs/
-```
-
----
-
-## Experiment Log (Required)
-
-You must include a file:
+## Project Structure
 
 ```
-experiments/experiments.md
+├── dataset/                 # Training and test data
+├── evaluation/              # Evaluation scripts
+├── Exp1/                    # Experiment 1: Baseline CNN
+├── Exp2/                    # Experiment 2: ResNet-18
+├── Exp3/                    # Experiment 3: DenseNet-121
+├── Vibe/                    # Additional experiments through vibecoding (Ignore)
+├── submission/              # Best Model
+│   ├── outputs/             # Best model outputs
+│   ├── experiments.md       # Detailed experiment log
+│   └── requirements.txt     # Dependencies
+├── experiments.md           # Experiment documentation
+├── requirements.txt         # Project dependencies
+└── README.md               # This file
 ```
 
-Document the different approaches you tried.
+## Installation & Setup
 
-### For each experiment, include:
+1. **Clone/Download** the repository
+2. **Install Dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. **Download Dataset**: Extract `dataset.zip` to the project root
+4. **Run Training**: Use the notebooks in `Exp2/` for the best model
+5. **Evaluate**: Run evaluation scripts or notebooks
 
-- What you changed (model, input size, preprocessing, etc.)
-- Why you tried it
-- What happened (result / observation)
-- What you learned
+## Dependencies
 
-### Example Format
+- torch
+- torchvision
+- scikit-learn
+- Pillow
+- matplotlib
+- numpy
+- pandas
+- pytorch_grad_cam
+- opencv-python
+- tqdm
 
-```
-#### Experiment 1 — Baseline
-- Used simple CNN with default settings  
-- Input parameters: <input size, batch size, learning rate, etc.> 
-- Result: Low accuracy (~65%)  
-- Observation: Model overfitting
+## How to Run
 
----
+### Training the Best Model
+1. Navigate to `Exp2/`
+2. Open `train_phase3.ipynb`
+3. Run all cells to train ResNet-18 with regularization
 
-#### Experiment 2 — Transfer Learning
-- Used pretrained ResNet18  
-- Same input parameters
-- Result: Significant improvement (~80%)  
-- Observation: Transfer learning works better on small dataset  
+### Testing & Evaluation
+1. Use `test_phase3.ipynb` for inference
+2. Check `outputs/metrics.txt` for performance metrics
+3. View `predictions.csv` for test predictions
 
----
+### Model Interpretation
+- Grad-CAM heatmaps are generated automatically
+- Sample outputs in `submission/outputs/sample_outputs/`
 
-#### Experiment 3 — Data Augmentation
-- Added random flips and rotations  
-- Result: Slight improvement  
-- Observation: Helps generalization  
+## Results & Outputs
 
----
-```
+- **Metrics**: Accuracy, precision, recall, F1, ROC-AUC
+- **Predictions**: CSV file with image names and predicted labels
+- **Interpretability**: Grad-CAM overlays showing influential regions
+- **Sample Outputs**: 3-5 example images with heatmaps
 
-### Expectations
+## Key Learnings
 
-- At least 2-3 experiments
-- Clear progression of ideas
-- Honest reporting (including failures)
+- Transfer learning significantly outperforms from-scratch CNNs on small medical datasets
+- Data augmentation and regularization are crucial for generalization
+- Grad-CAM provides valuable insights into model decision-making
+- Proper hook registration is essential for accurate feature visualization
+- Iterative experimentation leads to better understanding and results
 
-**This section is important—we evaluate how you think and iterate, not just your final model.**
+## Links
 
-### predictions.csv format
-
-```
-image_name,label 
-img_001.png,normal
-```
-
----
-
-### sample_outputs/
-
-Include:
-
-- 3–5 images with model interpretation overlays
-
----
-
-## Important
-
-- You may use AI tools
-- You must understand and explain your solution
-
----
-
-## Evaluation Criteria
-
-- Code quality
-- Clarity of explanation
-- Data handling decisions
-- Model interpretation
-- Reasoning
-
-Accuracy alone is not the primary metric
-
----
-
-## Handy Tips
-
-- Models require fixed-size inputs — decide how you handle this
-- Start simple before optimizing
-- Inspect sample images before training
-- Consider dataset imperfections
-- Focus on explainability
+- [GitLab Repository](https://gitlab.com/A-TomMarvoloRiddle/ScanO-assign-Apaar)
+- [Dataset Download](https://drive.google.com/file/d/1Lx47Vuqf2OXzGeDGAZMfno0TY8RQJB0M/view?usp=sharing)
 
