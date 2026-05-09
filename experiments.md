@@ -57,3 +57,15 @@ Chose DenseNet121 (pretrained on ImageNet) coz it's dense feature reuse helps ca
 Top Accuracy: 0.9750 surpasses all others, with perfect balance in precision, recall, F1, and ROC-AUC (0.9750). The confusion matrix shows only 4 misclassifications out of 160 samples.
 
 Comparison: This edges out Exp2 Phase 1 (0.9688) and significantly outperforms the others.
+
+### Phase Rankings and Comparison
+
+| Rank | Experiment | Phase | Accuracy | Precision | Recall | F1-Score | ROC-AUC | Notes                                               |
+|------|------------|-------|----------|-----------|--------|----------|---------|-----------------------------------------------------|
+| 1    | Exp2       | 3     | 0.9750   | 0.9750    | 0.9750 | 0.9750   | 0.9750  | ResNet-18 with regularization; top performer.       |
+| 2    | Exp2       | 1     | 0.9688   | 0.9747    | 0.9625 | 0.9686   | 0.9688  | ResNet-18 baseline; strong without augmentation.    |
+| 3    | Exp3       | 3     | 0.9437   | 0.9444    | 0.9437 | 0.9437   | N/A     | DenseNet121 with regularization; solid improvement. |
+| 4    | Exp2       | 2     | 0.9250   | 0.9146    | 0.9375 | 0.9259   | 0.9250  | ResNet-18 with augmentation only.                   |
+| 5    | Exp3       | 1     | 0.9125   | 0.9135    | 0.9125 | 0.9124   | N/A     | DenseNet121 frozen backbone baseline.               |
+| 6    | Exp3       | 2     | 0.9125   | 0.9167    | 0.9125 | 0.9123   | N/A     | DenseNet121 unfrozen with augmentation.             |
+| 7    | Exp1       | 3     | 0.9062   | 0.9333    | 0.8750 | 0.9032   | 0.9684  | Baseline CNN from scratch.                          |
