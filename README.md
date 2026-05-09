@@ -74,21 +74,91 @@ This model balances performance with interpretability and computational efficien
 
 ## Project Structure
 
-```
-├── dataset/                 # Training and test data
-├── evaluation/              # Evaluation scripts
-├── Exp1/                    # Experiment 1: Baseline CNN
-├── Exp2/                    # Experiment 2: ResNet-18
-├── Exp3/                    # Experiment 3: DenseNet-121
-├── Vibe/                    # Additional experiments through vibecoding (Ignore)
-├── submission/              # Best Model
-│   ├── outputs/             # Best model outputs
-│   ├── experiments.md       # Detailed experiment log
-│   └── requirements.txt     # Dependencies
-├── experiments.md           # Experiment documentation
-├── requirements.txt         # Project dependencies
-└── README.md               # This file
-```
+The project follows a structured organization with experiment isolation, clear deliverables, and comprehensive documentation:
+
+### Root Level Files
+- **`experiments.md`**: Comprehensive log documenting all experiments conducted, including changes made, results, observations, and learnings from each iteration across Experiments 1-3
+- **`README.md`**: Project documentation with overview, setup instructions, experiment summaries, and results
+- **`requirements.txt`**: Python dependencies required to run the project (torch, torchvision, scikit-learn, etc.)
+
+### Main Directories
+
+#### **`dataset/`**
+Contains the chest X-ray image dataset:
+- **`train/`**: Training images
+  - **`normal/`**: Normal chest X-rays for training
+  - **`pneumonia/`**: Pneumonia chest X-rays for training
+- **`test/`**: Test images
+  - **`normal/`**: Normal chest X-rays for testing
+  - **`pneumonia/`**: Pneumonia chest X-rays for testing
+
+#### **`evaluation/`**
+- **`evaluation.py`**: Scripts for model evaluation, metrics calculation, and performance analysis
+
+#### **`Exp1/`** (Experiment 1: Baseline CNN from Scratch)
+- **`requirements.txt`**: Experiment-specific dependencies
+- **`test1.ipynb`**, **`test2.ipynb`**: Testing notebooks for different configurations
+- **`train1.ipynb`**, **`train2.ipynb`**: Training notebooks for baseline CNN experiments
+- **`outputs/`**: Results from Exp1
+  - **`best_model.pth`**: Best trained CNN model
+  - **`metrics.txt`**: Performance metrics
+  - **`predictions.csv`**: Test set predictions
+  - **`sample_outputs/`**: Grad-CAM visualization examples
+
+#### **`Exp2/`** (Experiment 2: ResNet-18 Pretrained)
+- **`requirements.txt`**: Dependencies for ResNet experiments
+- **`test_phase1.ipynb`**, **`test_phase2.ipynb`**, **`test_phase3.ipynb`**: Testing notebooks for each phase
+- **`train_phase1.ipynb`**, **`train_phase2.ipynb`**, **`train_phase3.ipynb`**: Training notebooks for ResNet-18 phases
+- **`submission/`**: Contains final outputs for this experiment
+  - **`outputs/`**: Best models and results from all phases
+    - **`best_model_phase1.pth`**, **`best_model_phase2.pth`**, **`best_model_phase3.pth`**: Saved models
+    - **`metrics1.txt`**, **`metrics2.txt`**, **`metrics3.txt`**: Performance metrics for each phase
+    - **`predictions1.csv`**, **`predictions2.csv`**, **`predictions3.csv`**: Predictions
+    - **`sample_outputs/`**: Grad-CAM visualizations
+
+#### **`Exp3/`** (Experiment 3: DenseNet-121 Pretrained)
+- **`test.ipynb`**: Testing notebook
+- **`train.ipynb`**: Training notebook
+- **`outputs/`**: Results from DenseNet experiments
+  - **`best_model_phase1.pth`**, **`best_model_phase2.pth`**, **`best_model_phase3.pth`**: DenseNet models
+  - **`metrics.txt`**: Combined metrics
+  - **`predictions_phase1.csv`**, **`predictions_phase2.csv`**, **`predictions_phase3.csv`**: Phase-specific predictions
+  - **`predictions_phase1_test.csv`**, **`predictions_phase2_test.csv`**, **`predictions_phase3_test.csv`**: Test predictions
+  - **`sample_outputs/`**: Visualization folders for each phase
+    - **`phase1/`**, **`phase1_test/`**, **`phase2/`**, **`phase2_test/`**, **`phase3/`**, **`phase3_test/`**
+
+#### **`Vibe/`** (Unstructured Vibe Coding Exploratory Experiments)
+- **`exp1.md`**, **`exp2.md`**: Experiment notes
+- **`Exp1.py`**: Python script for experiments
+- **`Exp2.ipynb`**: Jupyter notebook for experiments
+- **`try1.ipynb`**, **`try1-1.ipynb`**: Trial notebooks
+- **`experiments/`**: Experiment documentation and outputs
+  - **`experiments.md`**: Experiment log
+  - **`outputs/`**: Various model outputs
+    - **`baseline_cnn.pt`**, **`best_resnet18.pth`**: Saved models
+    - **`metrics.txt`**, **`predictions.csv`**: Metrics and predictions
+    - **`exp1/`**, **`exp2/`**: Sub-experiment results with sample outputs
+    - **`sample_outputs/`**: General visualization examples
+
+#### **`submission/`** (Final Deliverables)
+This folder contains the polished, submission-ready version of the best work:
+- **`README.md`**: Submission README
+- **`requirements.txt`**: Dependencies
+- **`test_phase1_Exp2.ipynb`**, **`train_phase1_Exp2.ipynb`**: Notebooks for the best model (Exp2 Phase 1)
+- **`experiments/`**: 
+  - **`experiments.md`**: Experiment documentation
+- **`outputs/`**: Final model outputs
+  - **`best_model_phase3.pth`**: Best performing model (ResNet-18 Phase 3)
+  - **`metrics3.txt`**: Final metrics (97.5% accuracy)
+  - **`predictions3.csv`**: Final predictions
+  - **`sample_outputs/`**: Grad-CAM examples for submission
+
+### Organization Philosophy
+- **Experiment Isolation**: Each major experiment (Exp1, Exp2, Exp3) has its own folder with complete code, data, and outputs
+- **Phase Separation**: Within experiments, different configurations are separated into phases
+- **Deliverables**: The `submission/` folder contains the clean, final version for evaluation
+- **Documentation**: Experiment logs and READMEs provide context for each component
+- **Outputs**: Consistent structure across experiments (metrics.txt, predictions.csv, sample_outputs/)
 
 ## Installation & Setup
 
