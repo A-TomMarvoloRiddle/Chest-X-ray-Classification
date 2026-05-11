@@ -1,4 +1,5 @@
-## Detailed work can be viewed here: [Apaar ScanO Assig. on GitLab](https://gitlab.com/A-TomMarvoloRiddle/ScanO-assign-Apaar)
+## Details of Experiments & Phases
+Instead of doing 9 Experiments/Iterations, I structured my apporach to have 3 major experiments (models) with 3 phases each (variations in augmentation & regularisation)
 
 ### Experiment 1 - Baseline CNN from Scratch
 > Framework: PyTorch | Device: CPU
